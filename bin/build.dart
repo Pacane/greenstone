@@ -1,9 +1,9 @@
-import 'package:build/build.dart';
 import 'package:dogma_source_analyzer/analyzer.dart';
 import 'package:dogma_source_analyzer/metadata.dart';
 import 'package:dogma_source_analyzer/matcher.dart';
 import 'package:dogma_source_analyzer/query.dart';
 import 'package:logging/logging.dart';
+import 'package:greenstone/metadata.dart';
 
 main() {
   Logger.root.level = Level.ALL;
@@ -12,16 +12,30 @@ main() {
   });
 
   final context = analysisContext();
-  var library =
-      libraryMetadata(Uri.parse('package:greenstone/resources.dart'), context);
+  var library = libraryMetadata(
+      Uri.parse('package:greenstone/resources.dart'), context,
+      annotationCreators: [
+        analyzeAnnotation('Group'),
+        analyzeAnnotation('Get'),
+        analyzeAnnotation('Post'),
+        analyzeAnnotation('QueryParam'),
+      ]);
 
-  var classQuery = libraryMetadataQueryAll(library, (value) => true,
-      includeClasses: true,
-      includeExports: true,
-      includeFields: true,
-      includeFunctions: true,
-      includeImports: true);
+  final groups = libraryMetadataQueryAll/*<ClassMetadata>*/(
+          library, (ClassMetadata m) => m.annotations.any((a) => a is Group),
+          includeClasses: true)
+      .toList();
 
-  var b = classQuery.toList();
+  
+
+  groups.forEach((ClassMetadata m) {
+
+  });
+
+  final postEndpoints = groups.where((MethodMetadata e) => e.annotations.any((a) => a is Post));
+  final getEndpoints = groups.where((MethodMetadata e) => e.annotations.any((a) => a is Get));
+
+
+
   print("allo");
 }

@@ -11,10 +11,13 @@ main(List<String> args) {
 
   final myRouter = router();
   myRouter.get('/hello', (Request r) => resource.getSomeObject());
+
+
   myRouter.get('/helloWithQueryParam', (Request r) {
     final a = int.parse(r.requestedUri.queryParameters['a']);
     return resource.withSomeQueryParams(a);
   });
+
   myRouter.post('/helloWithBodyParam', (Request r) async {
     final body = await r.readAsString();
     final decodedJson = JSON.decode(body) as Map<String, dynamic>;

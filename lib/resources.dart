@@ -4,19 +4,20 @@ import 'package:shelf/shelf.dart';
 import 'metadata.dart';
 import 'dart:convert';
 
+@Group('/hello')
 class SomeResource {
+  @Get('/world')
   Response getSomeObject() {
     return new Response.ok('Hello World');
   }
 
-  Response withSomeQueryParams(@queryParam('a') int a) {
+  Response withSomeQueryParams(@QueryParam('a') int a) {
     return new Response.ok((a * 2).toString());
   }
 
-  @post()
-  @produces.json()
-  @consumes.json()
-  Response withBodyParam(@bodyParam('a') Person a) {
+  @Produces.json()
+  @Consumes.json()
+  Response withBodyParam(@BodyParam('a') Person a) {
     final newPerson = a;
     a.age++;
 

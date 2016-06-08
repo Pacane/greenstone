@@ -1,26 +1,39 @@
-class queryParam {
+class QueryParam {
   final String name;
 
-  const queryParam(this.name);
+  const QueryParam(this.name);
 }
 
-class bodyParam {
+class Group {
+  final String path;
+
+  const Group(this.path);
+}
+
+class BodyParam {
   final String name;
 
-  const bodyParam(this.name);
+  const BodyParam(this.name);
 }
 
-class post {
-  const post();
+class Get {
+  final String path;
+
+  const Get(this.path);
 }
 
-class produces {
-  const produces.json();
-  const produces.stream();
-  const produces.string();
+class Post {
+  final String path;
+
+  const Post(this.path);
 }
 
-class consumes {
-  const consumes.json();
+class Produces {
+  const Produces.json();
+  const Produces.stream();
+  const Produces.string();
 }
 
+class Consumes {
+  const Consumes.json();
+}
