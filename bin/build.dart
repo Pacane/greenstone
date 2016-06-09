@@ -4,6 +4,7 @@ import 'package:dogma_source_analyzer/matcher.dart';
 import 'package:dogma_source_analyzer/query.dart';
 import 'package:logging/logging.dart';
 import 'package:greenstone/metadata.dart';
+import 'package:greenstone/domain.dart' as dsl;
 
 main() {
   Logger.root.level = Level.ALL;
@@ -21,21 +22,33 @@ main() {
         analyzeAnnotation('QueryParam'),
       ]);
 
-  final groups = libraryMetadataQueryAll/*<ClassMetadata>*/(
+  final groupSymbols = libraryMetadataQueryAll/*<ClassMetadata>*/(
           library, (ClassMetadata m) => m.annotations.any((a) => a is Group),
           includeClasses: true)
       .toList();
 
-  
+  groupSymbols.forEach((ClassMetadata classMetaData) {
+    validateGroupMetadata(classMetaData);
 
-  groups.forEach((ClassMetadata m) {
+    final groupAnnotation =
+        classMetaData.annotations.singleWhere((a) => a is Group) as Group;
 
+    final group = new dsl.Group()..path = groupAnnotation.path;
+
+
+    final b = 12;
   });
 
-  final postEndpoints = groups.where((MethodMetadata e) => e.annotations.any((a) => a is Post));
-  final getEndpoints = groups.where((MethodMetadata e) => e.annotations.any((a) => a is Get));
-
-
+  final postEndpoints = groupSymbols
+      .where((MethodMetadata e) => e.annotations.any((a) => a is Post));
+  final getEndpoints = groupSymbols
+      .where((MethodMetadata e) => e.annotations.any((a) => a is Get));
 
   print("allo");
+}
+
+void validateGroupMetadata(ClassMetadata m) {}
+
+class MetadataValidationException implements Exception {
+  const MetadataValidationException(String message);
 }
