@@ -1,7 +1,8 @@
 library resources;
 
+import 'dart:async';
+import 'package:greenstone/greenstone.dart';
 import 'package:shelf/shelf.dart';
-import 'metadata.dart';
 import 'dart:convert';
 
 @Group('/hello')
@@ -39,3 +40,17 @@ class Person {
   }
 }
 
+@InterceptorPath(r'/.*')
+class CorsHeaderInterceptor extends Interceptor {
+  @override
+  Future<InterceptorResult> handleRequest(InterceptorResult previous) async {
+    if (previous.request.method != 'OPTIONS') {
+      return previous;
+    }
+
+    var newResponse =
+        previous.response.change(headers: {"Access-Control-Allow-Origin": "*"});
+
+    return new InterceptorResult(previous.request, newResponse);
+  }
+}

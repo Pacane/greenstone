@@ -37,3 +37,9 @@ class Produces {
 class Consumes {
   const Consumes.json();
 }
+
+class InterceptorPath {
+  final String pattern;
+
+  const InterceptorPath(this.pattern, {int chainId});
+}

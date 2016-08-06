@@ -3,8 +3,8 @@ import 'package:dogma_source_analyzer/metadata.dart';
 import 'package:dogma_source_analyzer/matcher.dart';
 import 'package:dogma_source_analyzer/query.dart';
 import 'package:logging/logging.dart';
-import 'package:greenstone/metadata.dart';
-import 'package:greenstone/domain.dart' as dsl;
+import 'package:greenstone/src/metadata.dart';
+import 'package:greenstone/src/domain.dart' as dsl;
 
 main() {
   Logger.root.level = Level.ALL;

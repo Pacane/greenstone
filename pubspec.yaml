@@ -10,3 +10,4 @@ dependencies:
     path: ../dogma-codegen
   dogma_source_analyzer:
     path: ../dogma-source-analyzer
+  uri: '>=0.11.0 <0.12.0'
