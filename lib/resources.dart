@@ -54,3 +54,23 @@ class CorsHeaderInterceptor extends Interceptor {
     return new InterceptorResult(previous.request, newResponse);
   }
 }
+
+class CapitalizeBodyInterceptor extends Interceptor {
+  @override
+  Future<InterceptorResult> handleResponse(InterceptorResult previous) async {
+    var body = await previous.response.readAsString();
+    var newResponse = previous.response.change(body: body.toUpperCase());
+
+    return new InterceptorResult(previous.request, newResponse);
+  }
+}
+
+class AbortingInterceptor extends Interceptor {
+  @override
+  Future<InterceptorResult> handleRequest(InterceptorResult previous) async {
+    var newResponse = new Response.forbidden('Cannot access this page');
+
+    return new InterceptorResult(previous.request, newResponse,
+        isAborted: true);
+  }
+}

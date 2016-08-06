@@ -1,30 +1,26 @@
-import 'dart:async';
 import 'dart:convert';
 import 'package:greenstone/resources.dart';
 import 'package:greenstone/greenstone.dart';
 
-genericHandler(Request, Function f) => (Request) => f();
-
-class CapitalizeBodyInterceptor extends Interceptor {
-  @override
-  Future<InterceptorResult> handleResponse(InterceptorResult previous) async {
-    var body = await previous.response.readAsString();
-    var newResponse = previous.response.change(body: body.toUpperCase());
-
-    return new InterceptorResult(previous.request, newResponse);
-  }
-}
-
-main(List<String> args) {
+void main(List<String> args) {
   final resource = new SomeResource();
   final corsInterceptor = new CorsHeaderInterceptor();
   final toUppercaseInterceptor = new CapitalizeBodyInterceptor();
+  final abortingInterceptor = new AbortingInterceptor();
 
   final myRouter = router();
   myRouter.get('/hello', (Request r) {
     final chain = new HandlersChain((Request r) {
       return resource.getSomeObject();
     }, [corsInterceptor, toUppercaseInterceptor]);
+
+    return chain.run(r);
+  });
+
+  myRouter.get('/unauthorized', (Request r) {
+    final chain = new HandlersChain((Request r) {
+      return resource.getSomeObject();
+    }, [corsInterceptor, abortingInterceptor]);
 
     return chain.run(r);
   });

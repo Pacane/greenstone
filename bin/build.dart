@@ -6,7 +6,7 @@ import 'package:logging/logging.dart';
 import 'package:greenstone/src/metadata.dart';
 import 'package:greenstone/src/domain.dart' as dsl;
 
-main() {
+void main() {
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((LogRecord rec) {
     print('${rec.level.name}: ${rec.time}: ${rec.message}');
@@ -39,10 +39,6 @@ main() {
     final b = 12;
   });
 
-  final postEndpoints = groupSymbols
-      .where((MethodMetadata e) => e.annotations.any((a) => a is Post));
-  final getEndpoints = groupSymbols
-      .where((MethodMetadata e) => e.annotations.any((a) => a is Get));
 
   print("allo");
 }

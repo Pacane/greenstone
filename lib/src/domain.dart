@@ -44,21 +44,21 @@ class HandlersChain {
     var interceptorResult = new InterceptorResult(request, null);
 
     for (var interceptor in interceptors) {
+      interceptorResult = await interceptor.handleRequest(interceptorResult);
+
       if (interceptorResult.isAborted) {
         return interceptorResult.response;
       }
-
-      interceptorResult = await interceptor.handleRequest(interceptorResult);
     }
 
     interceptorResult.response = await handler(request);
 
     for (var interceptor in interceptors) {
+      interceptorResult = await interceptor.handleResponse(interceptorResult);
+
       if (interceptorResult.isAborted) {
         return interceptorResult.response;
       }
-
-      interceptorResult = await interceptor.handleResponse(interceptorResult);
     }
 
     return interceptorResult.response;
