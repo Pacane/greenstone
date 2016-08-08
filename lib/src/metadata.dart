@@ -1,7 +1,5 @@
 class QueryParam {
-  final String name;
-
-  const QueryParam(this.name);
+  const QueryParam();
 }
 
 class Group {
@@ -10,10 +8,17 @@ class Group {
   const Group(this.path);
 }
 
-class BodyParam {
-  final String name;
+enum BodyType { json, binary, text, form }
 
-  const BodyParam(this.name);
+const BodyType json = BodyType.json;
+const BodyType binary = BodyType.binary;
+const BodyType text = BodyType.text;
+const BodyType form = BodyType.form;
+
+class BodyParam {
+  final BodyType bodyType;
+
+  const BodyParam(this.bodyType);
 }
 
 class Get {

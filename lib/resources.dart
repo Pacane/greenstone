@@ -12,18 +12,25 @@ class SomeResource {
     return new Response.ok('Hello World');
   }
 
-  Response withSomeQueryParams(@QueryParam('a') int a) {
+  @Get('/double-value')
+  Response withSomeQueryParams(@QueryParam() int a) {
     return new Response.ok((a * 2).toString());
   }
 
   @Produces.json()
   @Consumes.json()
-  Response withBodyParam(@BodyParam('a') Person a) {
-    final newPerson = a;
-    a.age++;
+  Response withBodyParam(@BodyParam(json) Person p) {
+    final newPerson = p;
+    p.age++;
 
     return new Response.ok(JSON.encode(newPerson.toJson()));
   }
+}
+
+@Group('/')
+class AnotherGroup {
+  @Get('triple')
+  Response triple(@QueryParam() a) => new Response.ok(a * 3);
 }
 
 class Person {

@@ -12,9 +12,14 @@ class Route {
 }
 
 abstract class Parameter {
-  String prettyName;
   String name;
+  bool isTypeBuiltIn;
+  String typeName;
 }
+
+class QueryParameter extends Parameter {}
+
+class BodyParameter extends Parameter {}
 
 enum Method { get, post, put, patch }
 
