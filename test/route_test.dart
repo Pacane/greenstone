@@ -8,7 +8,7 @@ main() {
       final route = new Route(segments);
 
       expect(route.computedRoute, '/');
-    }, skip: true);
+    }, skip: false);
 
     test('with no parameter and only one path segment', () {
       final segments = [new PathSegment('hello')];
