@@ -33,18 +33,3 @@ class Post {
   const Post(this.path);
 }
 
-class Produces {
-  const Produces.json();
-  const Produces.stream();
-  const Produces.string();
-}
-
-class Consumes {
-  const Consumes.json();
-}
-
-class InterceptorPath {
-  final String pattern;
-
-  const InterceptorPath(this.pattern, {int chainId});
-}
