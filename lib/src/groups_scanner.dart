@@ -11,8 +11,6 @@ class SomeGenerator extends GeneratorForAnnotation<Group> {
   @override
   Future<String> generateForAnnotatedElement(
       Element element, Group annotation, BuildStep buildStep) async {
-
     return '';
-
   }
 }

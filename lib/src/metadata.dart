@@ -32,4 +32,3 @@ class Post {
 
   const Post(this.path);
 }
-
